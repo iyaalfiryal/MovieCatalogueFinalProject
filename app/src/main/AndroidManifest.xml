@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.firyal.moviecatalogue">
+
+    <application
+        android:name=".activity.MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_iconmovie"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_iconmovie"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".activity.SearchMovie">
+
+        </activity>
+
+        <activity android:name=".reminder.ReminderActivity" >
+
+        </activity>
+
+        <activity
+            android:name=".activity.SplashScreen"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.detail.DetailTv" />
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name" />
+
+        <activity android:name=".activity.detail.DetailMovie" />
+
+        <service android:name=".widget.StackWidget"
+            android:permission="android:permission.BIND_REMOTEVIEWS"/>
+
+        <receiver
+            android:name=".reminder.TodayReminder"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".reminder.DailyReminder"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver android:name=".widget.BannerMovie">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/movie_banner_info" />
+
+        </receiver>
+
+        <provider
+            android:name=".MovieProvider"
+            android:authorities="com.firyal.moviecatalogue"
+            android:exported="true"
+            android:permission="com.firyal.moviecatalogue.READ_WRITE" />
+
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <permission
+        android:name="com.firyal.moviecatalogue.READ_WRITE"
+        android:protectionLevel="normal" />
+
+</manifest>

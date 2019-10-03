@@ -1,0 +1,34 @@
+<resources>
+
+    <string name="app_name">Movie Catalogue</string>
+    <string name="title_home">Movie</string>
+    <string name="title_dashboard">TV</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="overview">OVERVIEW</string>
+    <string name="time">TIME</string>
+    <string name="judul">TITLE</string>
+    <string name="loading">LOADING</string>
+    <string name="language">Change language</string>
+    <string name="more">More...</string>
+    <string name="fav">Fav</string>
+    <string name="nofav">No Favorite Movie</string>
+    <string name="movie">Movie</string>
+    <string name="tv">Tv</string>
+    <string name="sukses">Save succsess!</string>
+    <string name="gagal">Save failed!</string>
+    <string name="hapus">Erase from Favorites?</string>
+    <string name="ya">yes!</string>
+    <string name="deleted">deleted!</string>
+    <string name="no">no!</string>
+
+    <string name="pengingat_rilis_film">Pengingat Rilis Film</string>
+    <string name="pengingat_harian">Pengingat Harian</string>
+    <string name="pengingat_untuk_kembali_ke_aplikasi">Pengingat untuk kembali ke aplikasi</string>
+    <string name="pengingat_menunjukkan_film_yang_dirilis_hari_ini">Pengingat menunjukkan film yang dirilis hari ini</string>
+    <string name="pesan_daily_reminder">Aplikasi film ini sedang menunggu anda!</string>
+    <string name="reminder">Reminder</string>
+
+
+</resources>

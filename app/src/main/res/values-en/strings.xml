@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movie Catalogue</string>
+    <string name="title_home">Movie</string>
+    <string name="title_dashboard">TV</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="overview">OVERVIEW</string>
+    <string name="time">TIME</string>
+    <string name="judul">TITLE</string>
+    <string name="loading">LOADING</string>
+    <string name="language">Change language</string>
+    <string name="more">More...</string>
+    <string name="fav">Favorite</string>
+    <string name="nofav">No Favorite Movie</string>
+    <string name="movie">Movie</string>
+    <string name="tv">Tv</string>
+    <string name="sukses">Save succsess!</string>
+    <string name="gagal">Save failed!</string>
+    <string name="hapus">Erase from favorite?</string>
+    <string name="ya">yes!</string>
+    <string name="deleted">deleted</string>
+    <string name="no">no!</string>
+</resources>

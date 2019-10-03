@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Katalog Film</string>
+    <string name="title_home">Film</string>
+    <string name="title_dashboard">TV</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">hai fragment kosong</string>
+    <string name="overview">DESKRIPSI</string>
+    <string name="time">WAKTU</string>
+    <string name="judul">JUDUL</string>
+    <string name="loading">Mohon ditunggu..</string>
+    <string name="language">Ganti Bahasa</string>
+    <string name="more">More...</string>
+    <string name="fav">Favorit</string>
+    <string name="nofav">Tidak ada Film Favorit</string>
+    <string name="movie">Film</string>
+    <string name="tv">Tv</string>
+    <string name="sukses">Menyimpan berhasil</string>
+    <string name="gagal">Menyimpan gagal</string>
+    <string name="hapus">Hapus dari Favorit?</string>
+    <string name="ya">ya</string>
+    <string name="deleted">terhapus :(</string>
+    <string name="no">no</string>
+</resources>
