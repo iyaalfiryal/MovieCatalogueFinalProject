@@ -1,4 +1,4 @@
-package com.firyal.moviecatalogue;
+package com.firyal.moviecatalogue.provider;
 
 import android.annotation.SuppressLint;
 import android.content.ContentProvider;
@@ -9,6 +9,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.firyal.moviecatalogue.Constant;
 import com.firyal.moviecatalogue.data.movie.DatabaseMovie;
 import com.firyal.moviecatalogue.data.movie.MovieDao;
 import com.firyal.moviecatalogue.model.ResultsItemMovie;

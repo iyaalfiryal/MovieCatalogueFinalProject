@@ -3,14 +3,12 @@ package com.firyal.moviecatalogue.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.firyal.moviecatalogue.BuildConfig;
 import com.firyal.moviecatalogue.Constant;
 import com.firyal.moviecatalogue.R;
 import com.firyal.moviecatalogue.data.movie.DatabaseMovie;
@@ -59,7 +57,8 @@ public class StackRemote implements RemoteViewsService.RemoteViewsFactory {
         try {
             Bitmap bitmap = Glide.with(mcontext)
                     .asBitmap()
-                    .load(Constant.URLIMAGE + resultsItemMovies.get(i).getPosterPath())
+                    .load(Constant.URLIMAGE + resultsItemMovies.get(i)
+                            .getPosterPath())
                     .apply(new RequestOptions().fitCenter()).submit().get();
 
             remoteViews.setImageViewBitmap(R.id.imgWidget, bitmap);

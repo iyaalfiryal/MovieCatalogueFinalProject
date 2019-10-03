@@ -22,4 +22,12 @@
     <string name="ya">yes!</string>
     <string name="deleted">deleted</string>
     <string name="no">no!</string>
+
+    <string name="pengingat_rilis_film">Film Release Reminder</string>
+    <string name="pengingat_harian">Daily reminder</string>
+    <string name="pengingat_untuk_kembali_ke_aplikasi">Reminder to return to the application </string>
+    <string name="pengingat_menunjukkan_film_yang_dirilis_hari_ini">Reminder shows movies released today</string>
+    <string name="pesan_daily_reminder">This movie application is waiting for you! </string>
+    <string name="reminder">Reminder</string>
+
 </resources>

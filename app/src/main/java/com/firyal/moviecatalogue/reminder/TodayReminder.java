@@ -1,5 +1,6 @@
 package com.firyal.moviecatalogue.reminder;
 
+
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -8,129 +9,131 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+import android.widget.CompoundButton;
 
 import com.firyal.moviecatalogue.R;
-import com.firyal.moviecatalogue.activity.detail.DetailMovie;
+import com.firyal.moviecatalogue.api.Server;
+import com.firyal.moviecatalogue.model.ResponseMovie;
 import com.firyal.moviecatalogue.model.ResultsItemMovie;
+import com.orhanobut.hawk.Hawk;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TodayReminder extends BroadcastReceiver {
 
-    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+    private final int REQUEST_CODE_RELEASE = 12;
 
-    private static int notifId = 1000;
+    private List<ResultsItemMovie> releaseResultsList = new ArrayList<>();
+
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
 
-        int notifId = intent.getIntExtra("id", 0);
-        String title = intent.getStringExtra("title");
+        Date cal = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        final String dateToday = dateFormat.format(cal);
 
-        showAlarmNotification(context, title, notifId);
-    }
-
-    private void showAlarmNotification(Context context, String title, int notifId) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(
-                Context.NOTIFICATION_SERVICE);
-
-        Intent intent = new Intent(context, DetailMovie.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, notifId, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Uri alarmRingtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        @SuppressLint({"StringFormatInvalid", "LocalSuppress"}) NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
-                .setContentTitle(title)
-                .setContentText(String.format(context.getString(R.string.pengingat_harian), title))
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
-                .setColor(ContextCompat.getColor(context, android.R.color.transparent))
-                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-                .setSound(alarmRingtone);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.enableVibration(true);
-            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-
-            builder.setChannelId(NOTIFICATION_CHANNEL_ID);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
-        notificationManager.notify(notifId, builder.build());
-    }
-
-    public void setRepeatingAlarm(Context context, List<ResultsItemMovie> movies) {
-
-        int delay = 0;
-
-        for (ResultsItemMovie movie : movies) {
-            cancelAlarm(context);
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, TodayReminder.class);
-            intent.putExtra("title", movie.getTitle());
-            intent.putExtra("id", notifId);
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 8);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-
-            int SDK_INT = Build.VERSION.SDK_INT;
-            if (SDK_INT < Build.VERSION_CODES.KITKAT) {
-                alarmManager.set(AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis() + delay, pendingIntent);
-            } else if (SDK_INT > Build.VERSION_CODES.KITKAT && SDK_INT < Build.VERSION_CODES.M) {
-                alarmManager.setInexactRepeating(
-                        AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis() + delay,
-                        AlarmManager.INTERVAL_DAY,
-                        pendingIntent
-                );
-            } else if (SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis() + delay, pendingIntent);
+        Server.getInitRetofit().getReleaseToday(dateToday, dateToday).enqueue(new Callback<ResponseMovie>() {
+            @Override
+            public void onResponse(Call<ResponseMovie> call, Response<ResponseMovie> response) {
+                if (response.body() != null) {
+                    releaseResultsList.add(response.body().getResults().get(0));
+                    for (ResultsItemMovie r : releaseResultsList) {
+                        String date = r.getReleaseDate();
+                        if (date.equals(dateToday)) {
+                            showAlarmNotification(context, context.getString(R.string.pengingat_rilis_film), r.getTitle(), 8);
+                        }
+                    }
+                }
             }
 
-            notifId += 1;
-            delay += 5000;
-            Log.e("title", movie.getTitle());
+            @Override
+            public void onFailure(Call<ResponseMovie> call, Throwable t) {
+                t.printStackTrace();
+                Log.e("Ada Error", t.getMessage());
+            }
+        });
+
+    }
+
+
+    private void showAlarmNotification(Context context, String title, String message, int notifId) {
+        String CHANNEL_ID = "Channel_2";
+        String CHANNEL_NAME = "Release channel";
+        NotificationCompat.Builder builder;
+
+        NotificationManager notificationManagerCompat = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setColor(ContextCompat.getColor(context, android.R.color.transparent))
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                .setSound(alarmSound);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
+
+            builder.setChannelId(CHANNEL_ID);
+
+            if (notificationManagerCompat != null) {
+                notificationManagerCompat.createNotificationChannel(channel);
+            }
+        }
+
+        android.app.Notification notification = builder.build();
+
+        if (notificationManagerCompat != null) {
+            notificationManagerCompat.notify(notifId, notification);
+        }
+
+    }
+
+    public void setRepeatingAlarm(Context context) {
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, TodayReminder.class);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_RELEASE, intent, 0);
+        if (alarmManager != null) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         }
     }
 
-    public void cancelAlarm(Context context) {
+
+    public void stopReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(getPendingIntent(context));
+        Intent intent = new Intent(context, TodayReminder.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE_RELEASE, intent, 0);
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+        }
     }
 
-    private static PendingIntent getPendingIntent(Context context) {
-        /* get the application context */
-        Intent alarmIntent = new Intent(context, TodayReminder.class);
-
-        boolean isAlarmOn = (PendingIntent.getBroadcast(context, notifId, alarmIntent,
-                PendingIntent.FLAG_NO_CREATE) != null);
-
-        Log.e("isAlarmOn : ", String.valueOf(isAlarmOn));
-
-        Log.e("id_when_cancel", String.valueOf(notifId));
-
-        return PendingIntent.getBroadcast(context, 101, alarmIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-    }
 }

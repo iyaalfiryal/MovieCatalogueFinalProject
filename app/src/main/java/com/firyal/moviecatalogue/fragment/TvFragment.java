@@ -76,7 +76,7 @@ public class TvFragment extends Fragment {
         svTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SearchMovie.class));
+                startActivity(new Intent(getActivity(), SearchTv.class));
             }
         });
 

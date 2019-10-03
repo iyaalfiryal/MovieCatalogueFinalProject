@@ -6,6 +6,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -59,8 +60,8 @@ public class ReminderActivity extends AppCompatActivity {
         dailyReminder = new DailyReminder();
         todayReminder = new TodayReminder();
 
-        getReleaseToday();
-        setDailyReminder();
+//        getReleaseToday();
+        setDailyReminder(this);
         setSwichDaily();
     }
 
@@ -79,37 +80,18 @@ public class ReminderActivity extends AppCompatActivity {
         });
     }
 
-    private void setDailyReminder() {
+    private void setDailyReminder(final Context context) {
         sRelease.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (buttonView.isChecked()){
-                    todayReminder.setRepeatingAlarm(ReminderActivity.this, resultsItemMovies);
+                    todayReminder.setRepeatingAlarm(context);
                     Hawk.put("release", "");
-
                 }else {
-                    todayReminder.cancelAlarm(ReminderActivity.this);
+                    todayReminder.stopReminder(context);
                     Hawk.delete("release");
-                }
-            }
-        });
-    }
 
-    private void getReleaseToday() {
-        Server.getInitRetofit().getReleaseToday(formatDate, formatDate).enqueue(new Callback<ResponseMovie>() {
-            @Override
-            public void onResponse(Call<ResponseMovie> call, Response<ResponseMovie> response) {
-                if (response.isSuccessful()){
-                    ResponseMovie responseMovie = response.body();
-                    resultsItemMovies = responseMovie.getResults();
-                }else {
-                    Toast.makeText(ReminderActivity.this, "No data", Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseMovie> call, Throwable t) {
-                Toast.makeText(ReminderActivity.this, "No Data", Toast.LENGTH_SHORT).show();
             }
         });
     }

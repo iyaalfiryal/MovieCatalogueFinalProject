@@ -10,7 +10,7 @@ public class Constant {
     public static final String EXTRA_RESULT = "extra_result";
     public static final String TOAST_ACTION = "com.firyal.moviecatalogue.TOAST_ACTION";
     public static final String EXTRA_ITEM = "com.firyal.moviecatalogue.EXTRA_ITEM";
-    public static final String AUTHORITY = "com.firyal.moviecatalogue.provider";
+    public static final String AUTHORITY = "com.firyal.moviecatalogue";
     public static final int CODE_MOVIE_DIR = 1;
     public static final int CODE_MOVIE_ITEM = 2;
 //    public static final int NOTIFICATION_ID = 111;
