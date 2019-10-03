@@ -37,7 +37,6 @@ public class BannerMovie extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
 
         for (int appWidgetId : appWidgetIds){
             updateWidget(context, appWidgetManager, appWidgetId);
@@ -57,11 +56,11 @@ public class BannerMovie extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-
-        if (intent.getAction() != null){
-            int viewIndex = intent.getIntExtra(Constant.EXTRA_ITEM, 0);
-            Toast.makeText(context, "Touced View" + viewIndex, Toast.LENGTH_SHORT).show();
-
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals(Constant.TOAST_ACTION)) {
+                int viewIndex = intent.getIntExtra(Constant.EXTRA_ITEM, 0);
+                Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

@@ -13,8 +13,8 @@ public class Constant {
     public static final String AUTHORITY = "com.firyal.moviecatalogue.provider";
     public static final int CODE_MOVIE_DIR = 1;
     public static final int CODE_MOVIE_ITEM = 2;
-    public static final int NOTIFICATION_ID = 111;
-    public static final String NOTIFICATION_CHANNEL_ID = "11111";
-    public static int NOTIF_ID = 1000;
+//    public static final int NOTIFICATION_ID = 111;
+//    public static final String NOTIFICATION_CHANNEL_ID = "11111";
+//    public static int NOTIF_ID = 1000;
 
 }
