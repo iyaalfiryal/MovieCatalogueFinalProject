@@ -17,10 +17,13 @@ import com.firyal.moviecatalogue.model.ResultsItemMovie;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.firyal.moviecatalogue.Constant.AUTHORITY;
 
 @SuppressLint("Registered")
 public class MovieProvider extends ContentProvider {
+
+
+    public static final String AUTHORITY = "com.firyal.moviecatalogue.provider";
+
     private static final UriMatcher MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {

@@ -32,4 +32,7 @@ public interface MovieDao {
     @Query("SELECT * FROM tb_movie")
     Cursor getFavoriteCursor();
 
+
+
+
 }
