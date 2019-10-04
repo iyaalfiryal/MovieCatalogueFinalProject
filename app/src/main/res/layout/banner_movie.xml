@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,43 +9,39 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-    <StackView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/stackViewWidget"
-        android:loopViews="true"
-        android:layout_weight="9"/>
+        <StackView
+            android:id="@+id/stack_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:loopViews="true" />
 
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:padding="6dp"
-        android:background="@color/colorAccent"
-        android:text="Film Favorite"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:fontFamily="@font/poppinsbold"
-        android:textColor="@color/colorPrimaryDark"/>
-
+        <TextView
+            android:id="@+id/banner_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/film_favorite"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-
-        android:id="@+id/emptyWidget"
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:text="Film"
+        android:background="@color/colorPrimary"
+        android:text="@string/film"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:background="@color/colorAccent"
+        android:textColor="#ffffff"
         android:textSize="20sp"
-        android:fontFamily="@font/poppinsbold"/>
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </FrameLayout>

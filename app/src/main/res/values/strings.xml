@@ -29,6 +29,10 @@
     <string name="pengingat_menunjukkan_film_yang_dirilis_hari_ini">Pengingat menunjukkan film yang dirilis hari ini</string>
     <string name="pesan_daily_reminder">Aplikasi film ini sedang menunggu anda!</string>
     <string name="reminder">Reminder</string>
+    <string name="film_favorite">Film Favorite</string>
+    <string name="film">Film</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>

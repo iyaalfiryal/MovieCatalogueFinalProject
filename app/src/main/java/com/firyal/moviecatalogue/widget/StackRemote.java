@@ -53,7 +53,6 @@ public class StackRemote implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public RemoteViews getViewAt(int i) {
         RemoteViews remoteViews = new RemoteViews(mcontext.getPackageName(), R.layout.widget_item);
-
         try {
             Bitmap bitmap = Glide.with(mcontext)
                     .asBitmap()
