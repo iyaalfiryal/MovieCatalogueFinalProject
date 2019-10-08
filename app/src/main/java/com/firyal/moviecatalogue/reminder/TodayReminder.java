@@ -51,7 +51,7 @@ public class TodayReminder extends BroadcastReceiver {
             @Override
             public void onResponse(Call<ResponseMovie> call, Response<ResponseMovie> response) {
                 if (response.body() != null) {
-                    releaseResultsList.add(response.body().getResults().get(0));
+                    releaseResultsList.addAll(response.body().getResults());
                     for (ResultsItemMovie r : releaseResultsList) {
                         String date = r.getReleaseDate();
                         if (date.equals(dateToday)) {
